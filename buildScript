@@ -1,0 +1,21 @@
+#!/usr/bin/sh
+
+# get name of this folder
+DirString="`pwd`"
+shopt -s extglob
+ModuleName=${DirString%%+(/)}
+ModuleName=${ModuleName##*/}
+ModuleName=${ModuleName:-/}
+
+# remove old files
+rm cmake_install.cmake
+rm CMakeCache.txt
+rm compile_commands.json
+rm Makefile
+rm -r CMakeFiles/
+rm -r ${ModuleName}_autogen/
+rm lib${ModuleName}.so
+
+# build new files
+cmake .
+make
